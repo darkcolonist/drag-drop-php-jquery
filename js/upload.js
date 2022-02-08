@@ -14,7 +14,11 @@ $(document).ready(function(){
 
 				$("#uploads ul").append(`<li>[${response.timestamp}] ${theUrl}</li>`);
 			}else{
-				$("#uploads ul").append(`<li>file wasn't uploaded</li>`);
+				var additional = "";
+				if(response.message !== undefined)
+					additional += `: ${response.message}`;
+
+				$("#uploads ul").append(`<li>file wasn't uploaded${additional}</li>`);
 			}
 			
 			$("#initialMessage").hide();
