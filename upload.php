@@ -6,17 +6,13 @@ if(!empty($_FILES)){
 
     $fileName = $_FILES['file']['name'];
 
-    $uploadedFile = $uploadDir.$fileName;    
+    $Date2 = date('Ymd_His') . "_" . substr(md5(uniqid()),0,4);
+    $DotPos = strpos($fileName, '.');
+    $Extension = substr($fileName, $DotPos, strlen($fileName) - $DotPos);
+    $newfile = $Date2 . $Extension;
+    $uploadedFile = $uploadDir.$newfile;
+    
     if(move_uploaded_file($_FILES['file']['tmp_name'],$uploadedFile)) {
-        $Date2 = date('Ymd_His') . "_" . substr(md5(uniqid()),0,4);
-        $DotPos = strpos($uploadedFile, '.');
-        $Extension = substr($uploadedFile, $DotPos, strlen($uploadedFile) - $DotPos);
-        $newfile = $Date2 . $Extension;
-        rename($uploadedFile, $uploadDir . $newfile);
-
-        // $mysqlInsert = "INSERT INTO uploads (file_name, upload_time)VALUES('".$fileName."','".date("Y-m-d H:i:s")."')";
-		// mysqli_query($conn, $mysqlInsert);
-        
         echo json_encode(array(
             "code" => 200,
             "message" => "file successfully uploaded",
