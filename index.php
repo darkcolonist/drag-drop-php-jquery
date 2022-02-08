@@ -15,8 +15,8 @@ include('header.php');?>
 		</div>
 	</div>	
 	<div id="uploads">
-		<ul></ul>
 		<em id="initialMessage">uploaded file urls will be displayed here</em>
+		<ul></ul>
 	</div>	
 </div>
 <?php include('footer.php');?>

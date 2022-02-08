@@ -1,3 +1,9 @@
+const helpers = {
+	urlize: function(url){
+		return `<a href="${url}" target="_blank">${url}</a>`;
+	}
+};
+
 $(document).ready(function(){
 	$(".dropzone").dropzone({
 	  url: 'upload.php',
@@ -10,7 +16,7 @@ $(document).ready(function(){
 
 			if(response.code === 200){
 				var theUrl = response.url + response.file;
-				theUrl = `<a href="${theUrl}" target="_blank">${theUrl}</a>`;
+				theUrl = helpers.urlize(theUrl);
 
 				$("#uploads ul").append(`<li>[${response.timestamp}] ${theUrl}</li>`);
 			}else{
@@ -24,5 +30,18 @@ $(document).ready(function(){
 			$("#initialMessage").hide();
 			// console.log(response);
 		}
-	})
+	});
+
+	$.ajax("./filelist.php", {
+		method: "get",
+		type: "json",
+		success: function(data){
+			if(data.code === 200){
+				data.uploads.forEach(upload => {
+					let theUrl = helpers.urlize(upload.url);
+					$("#uploads ul").append(`<li>[${upload.timestamp}] ${theUrl}</li>`);
+				});
+			}
+		}
+	});	
 });

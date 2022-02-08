@@ -1,11 +1,7 @@
 <?php 
 // include_once("db_connect.php");
-require_once("./config.php");
-
-function jsonreturn($returnParams){
-  header("Content-type:text/json");
-  die(json_encode($returnParams));
-}
+require_once("config.php");
+require_once("helpers.php");
 
 if(!empty($_FILES)){ 
   $url = $config["url"];
@@ -18,7 +14,7 @@ if(!empty($_FILES)){
   $fileparts = explode(".", $fileName);
   
   if(count($fileparts) < 2)
-    jsonreturn(array(
+    helpers::jsonreturn(array(
       "code" => 400,
       "message" => "file must have an extension"
     ));
@@ -28,28 +24,28 @@ if(!empty($_FILES)){
   $uploadedFile = $uploadDir.$formattedFileName;
   
   // below is a debug message CODE 100
-  // jsonreturn(array(
+  // helpers::jsonreturn(array(
   //   "code" => 100,
   //   "message" => $uploadedFile
   // ));
   
   if(move_uploaded_file($_FILES['file']['tmp_name'],$uploadedFile)) {
-    jsonreturn(array(
+    helpers::jsonreturn(array(
       "code" => 200,
       "message" => "file successfully uploaded",
       "file" => $formattedFileName,
       "url" => $url,
-      "timestamp" => date("Y-m-d H:i:s")
+      "timestamp" => helpers::getdate()
     ));
   }else{
-    jsonreturn(array(
+    helpers::jsonreturn(array(
       "code" => 500,
       "message" => "upload failed"
     ));    
   }
   
 }else{
-  jsonreturn(array(
+  helpers::jsonreturn(array(
     "code" => 400,
     "message" => "nothing uploaded"
   ));
