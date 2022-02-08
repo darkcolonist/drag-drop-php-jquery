@@ -4,7 +4,7 @@ $(document).ready(function(){
 	  width: 300,
 	  height: 300, 
 	  progressBarWidth: '100%',
-	  maxFileSize: '5MB',
+	  maxFilesize: 5000,
 		success: function(params){
 			var response = JSON.parse(params.xhr.response);
 
