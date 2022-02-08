@@ -9,6 +9,11 @@ include('header.php');?>
 <?php include('container.php');?>
 <div class="container">
 	<p>files older than 24hrs will be deleted</p>
+
+	<iframe id="previewer" title="preview"
+		style="border: none; width: 400px; height: 200px; position: absolute; display: none"
+	></iframe>
+
 	<div class="dropzone">
 		<div class="dz-message needsclick">
 			<span>Drop files here or click to upload.</span>

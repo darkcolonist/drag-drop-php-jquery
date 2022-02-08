@@ -44,4 +44,26 @@ $(document).ready(function(){
 			}
 		}
 	});	
+
+	$("#uploads").on("mouseover mouseout", "li a", (event) => {
+		let target = event.currentTarget;
+
+		switch(event.type){
+			case "mouseover":
+				// show popup
+				// console.log('showing popup', event.pageX, event.pageY);
+				$("#previewer").attr("src", target.href);
+				$("#previewer").css({
+					top: event.pageY,
+					left: event.pageX + 40
+				});
+
+				$("#previewer").show();
+				break;
+			default:
+				$("#previewer").hide();
+				// hide popup
+				// console.log('hiding popup');
+		}
+	});
 });
