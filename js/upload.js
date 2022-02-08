@@ -1,6 +1,9 @@
 const helpers = {
 	urlize: function(url){
 		return `<a href="${url}" target="_blank">${url}</a>`;
+	},
+	timestampspan: function(timestamp){
+		return `<span class="noselect">[${timestamp}]&nbsp;</span>`;
 	}
 };
 
@@ -18,7 +21,7 @@ $(document).ready(function(){
 				var theUrl = response.url + response.file;
 				theUrl = helpers.urlize(theUrl);
 
-				$("#uploads ul").append(`<li>[${response.timestamp}] ${theUrl}</li>`);
+				$("#uploads ul").append(`<li>${helpers.timestampspan(response.timestamp)}${theUrl}</li>`);
 			}else{
 				var additional = "";
 				if(response.message !== undefined)
@@ -39,7 +42,7 @@ $(document).ready(function(){
 			if(data.code === 200){
 				data.uploads.forEach(upload => {
 					let theUrl = helpers.urlize(upload.url);
-					$("#uploads ul").append(`<li>[${upload.timestamp}] ${theUrl}</li>`);
+					$("#uploads ul").append(`<li>${helpers.timestampspan(upload.timestamp)}${theUrl}</li>`);
 				});
 			}
 		}
@@ -54,7 +57,7 @@ $(document).ready(function(){
 				// console.log('showing popup', event.pageX, event.pageY);
 				$("#previewer").attr("src", target.href);
 				$("#previewer").css({
-					top: event.pageY,
+					top: event.pageY - 200,
 					left: event.pageX + 40
 				});
 
