@@ -8,7 +8,7 @@ include('header.php');?>
 <script type="text/javascript" src="js/upload.js"></script>
 <?php include('container.php');?>
 <div class="container">
-	<p>files older than 24hrs will be deleted</p>
+	<p>files older than <code class="bg-dark">432,000</code> seconds will be deleted</p>
 
 	<iframe id="previewer" title="preview"
 		style="border: none; width: 400px; height: 200px; position: absolute; display: none"
