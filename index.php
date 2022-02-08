@@ -8,15 +8,10 @@ include('header.php');?>
 <script type="text/javascript" src="js/upload.js"></script>
 <?php include('container.php');?>
 <div class="container">
-	<h2>Example: Drag And Drop File Upload with jQuery and PHP</h2>		
 	<div class="dropzone">
 		<div class="dz-message needsclick">
-			<strong>Drop files here or click to upload.</strong><br />
-			<span class="note needsclick">(This is just a demo. The selected files are <strong>not</strong> actually uploaded.)</span>
+			<span>Drop files here or click to upload.</span>
 		</div>
-	</div>				
-	<div style="margin:10px 0px 0px 0px;">
-		<a class="btn btn-default read-more" style="background:#3399ff;color:white" href="http://www.coderszine.com/drag-and-drop-file-upload-with-jquery-and-php/" title="">Back to Tutorial</a>			
 	</div>		
 </div>
 <?php include('footer.php');?>

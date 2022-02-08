@@ -1,3 +1,8 @@
+body{
+  color: grey;
+  background-color: #333;
+}
+
 /*
  * The MIT License
  * Copyright (c) 2012 Matias Meno <m@tias.me>
@@ -176,7 +181,8 @@
 .dropzone {
   min-height: 150px;
   border: 2px solid rgba(0, 0, 0, 0.3);
-  background: white;
+  background: #444;
+  color: cyan;
   padding: 20px 20px; }
   .dropzone.dz-clickable {
     cursor: pointer; }
