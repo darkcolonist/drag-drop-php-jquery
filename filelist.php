@@ -3,7 +3,7 @@ require_once("config.php");
 require_once("helpers.php");
 
 $files = scandir($config["uploadDir"]);
-$files = array_diff($files, array(".", "..", ".gitkeep"));
+$files = array_diff($files, $config["ignorefilelist"]);
 $files = array_slice($files, $config["filelistlimit"] * -1);
 
 // $files = glob($config["uploadDir"]."*");
