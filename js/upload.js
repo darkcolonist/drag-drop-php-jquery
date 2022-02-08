@@ -4,6 +4,21 @@ $(document).ready(function(){
 	  width: 300,
 	  height: 300, 
 	  progressBarWidth: '100%',
-	  maxFileSize: '5MB'
+	  maxFileSize: '5MB',
+		success: function(params){
+			var response = JSON.parse(params.xhr.response);
+
+			if(response.code === 200){
+				var theUrl = response.url + response.file;
+				theUrl = `<a href="${theUrl}" target="_blank">${theUrl}</a>`;
+
+				$("#uploads ul").append(`<li>[${response.timestamp}] ${theUrl}</li>`);
+			}else{
+				$("#uploads ul").append(`<li>file wasn't uploaded</li>`);
+			}
+			
+			$("#initialMessage").hide();
+			// console.log(response);
+		}
 	})
 });
