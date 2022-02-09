@@ -19,9 +19,9 @@ if(!empty($_GET["page"]) && is_numeric($_GET["page"]) && $_GET["page"] > 0){
   $files = $chunks[$_GET["page"]];
 }else{
   $files = $chunks[0];
+  $files = array_reverse($files);
 }
 
-$files = array_reverse($files);
 
 // $files = glob($config["uploadDir"]."*");
 
