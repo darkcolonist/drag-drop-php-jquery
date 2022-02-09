@@ -20,6 +20,7 @@ include('header.php');?>
 		</div>
 	</div>	
 	<div id="uploads">
+		<p><button id="btnLoad" class="btn btn-primary">load earlier</button></p>
 		<em id="initialMessage">uploaded file urls will be displayed here</em>
 		<ul></ul>
 	</div>	

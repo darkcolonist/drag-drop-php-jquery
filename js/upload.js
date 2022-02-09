@@ -7,6 +7,40 @@ const helpers = {
 	}
 };
 
+let loadCounter = 1;
+
+const populateInitial = (list) => {
+	list.forEach(upload => {
+		let theUrl = helpers.urlize(upload.url);
+		$("#uploads ul").append(`<li>${helpers.timestampspan(upload.timestamp)}${theUrl}</li>`);
+	});
+}
+
+const populateEarlier = (list) => {
+	$("#uploads ul").prepend(`<li><hr /></li>`);
+
+	list.forEach(upload => {
+		let theUrl = helpers.urlize(upload.url);
+		$("#uploads ul").prepend(`<li class="new">${helpers.timestampspan(upload.timestamp)}${theUrl}</li>`);
+	});
+
+	$("#uploads ul li.new").hide();
+	$("#uploads ul li.new").fadeIn(1000);
+	$("#uploads ul li.new").removeClass("new");
+}
+
+const shouldShowLoadBtn = (leCount, leLimit) => {
+	if (leCount === leLimit) {
+		if (!$("#btnLoad").is(":visible"))
+			$("#btnLoad").fadeIn(3000);
+
+		$("#btnLoad").attr("disabled",false);
+	}else{
+		$("#btnLoad").attr("disabled",true);
+		$("#btnLoad").fadeOut(3000);
+	}
+}
+
 $(document).ready(function(){
 	$(".dropzone").dropzone({
 	  url: 'upload.php',
@@ -40,13 +74,22 @@ $(document).ready(function(){
 		type: "json",
 		success: function(data){
 			if(data.code === 200){
-				data.uploads.forEach(upload => {
-					let theUrl = helpers.urlize(upload.url);
-					$("#uploads ul").append(`<li>${helpers.timestampspan(upload.timestamp)}${theUrl}</li>`);
-				});
+				populateInitial(data.uploads);
+				shouldShowLoadBtn(data.uploads.length, data.limit);
 			}
 		}
 	});	
+
+	$("#btnLoad").on("click", () => {
+		$("#btnLoad").attr("disabled", "disabled");
+		$.ajax(`./filelist.php?page=${loadCounter}`)
+			.then(data => {
+				populateEarlier(data.uploads);
+				shouldShowLoadBtn(data.uploads.length, data.limit);
+				loadCounter++;
+			});
+
+	});
 
 	$("#uploads").on("mouseover mouseout", "li a", (event) => {
 		let target = event.currentTarget;
@@ -64,6 +107,7 @@ $(document).ready(function(){
 				$("#previewer").show();
 				break;
 			default:
+				$("#previewer").attr("src", "");
 				$("#previewer").hide();
 				// hide popup
 				// console.log('hiding popup');

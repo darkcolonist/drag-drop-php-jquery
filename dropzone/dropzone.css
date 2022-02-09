@@ -21,6 +21,10 @@ a:hover{
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+#btnLoad{
+  display: none;
+}
+
 /*
  * The MIT License
  * Copyright (c) 2012 Matias Meno <m@tias.me>
