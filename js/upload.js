@@ -113,4 +113,11 @@ $(document).ready(function(){
 				// console.log('hiding popup');
 		}
 	});
+
+	$("#btnJumpUp").on("click",() => {
+		window.scrollTo(0,0);
+	});
+	$("#btnJumpDown").on("click",() => {
+		window.scrollTo(0,document.body.scrollHeight);
+	});
 });

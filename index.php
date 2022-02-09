@@ -23,6 +23,6 @@ include('header.php');?>
 		<p><button id="btnLoad" class="btn btn-primary">load earlier</button></p>
 		<em id="initialMessage">uploaded file urls will be displayed here</em>
 		<ul></ul>
-	</div>	
+	</div>
 </div>
 <?php include('footer.php');?>

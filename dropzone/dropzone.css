@@ -25,6 +25,12 @@ a:hover{
   display: none;
 }
 
+#instantAccess{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
 /*
  * The MIT License
  * Copyright (c) 2012 Matias Meno <m@tias.me>
