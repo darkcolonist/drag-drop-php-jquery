@@ -8,6 +8,8 @@ const helpers = {
 };
 
 let loadCounter = 1;
+let ignorePreview = [];
+let includePreview = [];
 
 const populateInitial = (list) => {
 	list.forEach(upload => {
@@ -39,6 +41,16 @@ const shouldShowLoadBtn = (leCount, leLimit) => {
 		$("#btnLoad").attr("disabled",true);
 		$("#btnLoad").fadeOut(3000);
 	}
+}
+
+const showPreviewIframe = (event, target) => {
+	$("#previewer").attr("src", target.href);
+	$("#previewer").css({
+		top: event.pageY - 200,
+		left: event.pageX + 40
+	});
+
+	$("#previewer").show();
 }
 
 $(document).ready(function(){
@@ -78,7 +90,18 @@ $(document).ready(function(){
 				shouldShowLoadBtn(data.uploads.length, data.limit);
 			}
 		}
-	});	
+	});
+
+	$.ajax("./ignore.php", {
+		method: "get",
+		type: "json",
+		success: function (data) {
+			if (data.code === 200) {
+				ignorePreview = data.ignorepreview;
+				includePreview = data.includepreview;
+			}
+		}
+	});
 
 	$("#btnLoad").on("click", () => {
 		$("#btnLoad").attr("disabled", "disabled");
@@ -98,13 +121,11 @@ $(document).ready(function(){
 			case "mouseover":
 				// show popup
 				// console.log('showing popup', event.pageX, event.pageY);
-				$("#previewer").attr("src", target.href);
-				$("#previewer").css({
-					top: event.pageY - 200,
-					left: event.pageX + 40
-				});
-
-				$("#previewer").show();
+				let ext = target.href.split(".").pop().toLowerCase();
+				// console.log(ext, includePreview, ignorePreview);
+				if (includePreview.includes(ext) && !ignorePreview.includes(ext)){
+					showPreviewIframe(event, target);
+				}
 				break;
 			default:
 				$("#previewer").attr("src", "");

@@ -1,0 +1,13 @@
+<?php 
+$config = array(
+  "url" => "http://dev.test/dragdrop/uploads/",
+  "uploadDir" => "uploads/",
+  "filelistlimit" => 20,
+  "ignorefilelist" => array(".", "..", ".gitkeep"),
+
+  /**
+   * only use lower-case as front-end converts to lowercase
+   */
+  "ignorepreview" => array(),
+  "includepreview" => array("jpg","png","mp4"),
+);
