@@ -9,8 +9,6 @@ if(!empty($_FILES)){
   
   $fileName = $_FILES['file']['name'];
   
-  $datestr = date('Ymd_His') . "_" . substr(md5(uniqid()),0,4);
-  
   $fileparts = explode(".", $fileName);
   
   if(count($fileparts) < 2)
@@ -20,7 +18,13 @@ if(!empty($_FILES)){
     ));
   
   $fileExtension = ".".$fileparts[count($fileparts)-1];
-  $formattedFileName = $datestr.$fileExtension;
+
+  array_pop($fileparts);
+  $filepartscombined = implode("-",$fileparts);
+
+  $formattedFileName = helpers::randhash(rand(4,20))."_"
+    .helpers::cleanstring($filepartscombined)
+    .$fileExtension;
   $uploadedFile = $uploadDir.$formattedFileName;
   
   // below is a debug message CODE 100
