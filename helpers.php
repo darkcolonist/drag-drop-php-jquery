@@ -42,6 +42,7 @@ class helpers{
     $remainingfilelen = $maxfilelen - $hashlength;
     $cleaned = helpers::cleanstring($filepartscombined);
     $cleanedlen = strlen($cleaned);
+    $datestr = date("YmdHis");
 
     if(($cleanedlen + $hashlength) < $maxfilelen){
       $hashlength = $maxfilelen - $cleanedlen;
@@ -49,7 +50,8 @@ class helpers{
       $cleaned = substr($cleaned, -1 * $remainingfilelen);
     }
 
-    $formattedFileName = helpers::randhash($hashlength)."_"
+    $formattedFileName = $datestr."_"
+      .helpers::randhash($hashlength)."_"
       .$cleaned
       .$fileExtension;
 
