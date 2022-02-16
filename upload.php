@@ -17,14 +17,8 @@ if(!empty($_FILES)){
       "message" => "file must have an extension"
     ));
   
-  $fileExtension = ".".$fileparts[count($fileparts)-1];
+  $formattedFileName = helpers::createfilename($fileparts);
 
-  array_pop($fileparts);
-  $filepartscombined = implode("-",$fileparts);
-
-  $formattedFileName = helpers::randhash(rand(4,20))."_"
-    .helpers::cleanstring($filepartscombined)
-    .$fileExtension;
   $uploadedFile = $uploadDir.$formattedFileName;
   
   // below is a debug message CODE 100
