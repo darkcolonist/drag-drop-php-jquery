@@ -8,12 +8,11 @@ include('header.php');?>
 <script type="text/javascript" src="js/upload.js"></script>
 <?php include('container.php');?>
 <div class="container">
-	<p>files older than <code class="bg-dark">432,000</code> seconds will be deleted</p>
-
+	
 	<iframe id="previewer" title="preview"
-		style="border: none; width: 400px; height: 200px; position: absolute; display: none"
+	style="border: none; width: 400px; height: 200px; position: absolute; display: none"
 	></iframe>
-
+	
 	<div class="dropzone">
 		<div class="dz-message needsclick">
 			<span>Drop files here or click to upload.</span>
@@ -21,7 +20,8 @@ include('header.php');?>
 	</div>	
 	<div id="uploads">
 		<p><button id="btnLoad" class="btn btn-primary">load earlier</button></p>
-		<em id="initialMessage">uploaded file urls will be displayed here</em>
+		<p id="readme">files older than <code class="bg-dark">3,600</code> seconds will be deleted automagically</p>
+		<em id="initialMessage">uploaded file urls will be displayed below</em>
 		<ul></ul>
 	</div>
 </div>

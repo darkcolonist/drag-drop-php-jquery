@@ -10,11 +10,30 @@ const helpers = {
 let loadCounter = 1;
 let ignorePreview = [];
 let includePreview = [];
+let uploadexpires = 0;
+
+const populateLineContentString = (upload) => {
+	let theUrl = helpers.urlize(upload.url);
+	let timestampSpan = helpers.timestampspan(upload.timestamp);
+	let remaining = '';
+	if (uploadexpires !== 0){
+		let days = (upload.expires / 60 / 60 / 24).toLocaleString(undefined, { maximumFractionDigits: 1 });
+		let hours = (upload.expires / 60 / 60).toLocaleString(undefined, { maximumFractionDigits: 1 });
+		let choiceUnit = "hrs";
+		let choiceExpiry = hours;
+		if(days > 0){
+			choiceUnit = "days";
+			choiceExpiry = days;	
+		}
+		remaining = `&nbsp;(${choiceExpiry} ${choiceUnit})`;
+	}
+	
+	return `${timestampSpan}${theUrl}${remaining}`;
+}
 
 const populateInitial = (list) => {
 	list.forEach(upload => {
-		let theUrl = helpers.urlize(upload.url);
-		$("#uploads ul").append(`<li>${helpers.timestampspan(upload.timestamp)}${theUrl}</li>`);
+		$("#uploads ul").append(`<li>${populateLineContentString(upload)}</li>`);
 	});
 }
 
@@ -22,8 +41,7 @@ const populateEarlier = (list) => {
 	$("#uploads ul").prepend(`<li><hr /></li>`);
 
 	list.forEach(upload => {
-		let theUrl = helpers.urlize(upload.url);
-		$("#uploads ul").prepend(`<li class="new">${helpers.timestampspan(upload.timestamp)}${theUrl}</li>`);
+		$("#uploads ul").prepend(`<li class="new">${populateLineContentString(upload)}</li>`);
 	});
 
 	$("#uploads ul li.new").hide();
@@ -81,27 +99,45 @@ $(document).ready(function(){
 		}
 	});
 
-	$.ajax("./filelist.php", {
-		method: "get",
-		type: "json",
-		success: function(data){
-			if(data.code === 200){
-				populateInitial(data.uploads);
-				shouldShowLoadBtn(data.uploads.length, data.limit);
+	function loadFileList() {
+		$.ajax("./filelist.php", {
+			method: "get",
+			type: "json",
+			success: function (data) {
+				if (data.code === 200) {
+					populateInitial(data.uploads);
+					shouldShowLoadBtn(data.uploads.length, data.limit);
+				}
 			}
-		}
-	});
+		});
+	}
 
-	$.ajax("./ignore.php", {
-		method: "get",
-		type: "json",
-		success: function (data) {
-			if (data.code === 200) {
-				ignorePreview = data.ignorepreview;
-				includePreview = data.includepreview;
+	function loadConfigs(){
+		$.ajax("./ignore.php", {
+			method: "get",
+			type: "json",
+			success: function (data) {
+				if (data.code === 200) {
+					$readme = $("p#readme");
+
+					ignorePreview = data.ignorepreview;
+					includePreview = data.includepreview;
+
+					if (data.uploadexpires !== 0) {
+						uploadexpires = data.uploadexpires;
+						$readme.children("code").html(data.uploadexpires.toLocaleString());
+						$readme.show(1000);
+					}
+				}
+			},
+			complete: function () {
+				loadFileList();
 			}
-		}
-	});
+		});
+	}
+
+	// start!
+	loadConfigs();
 
 	$("#btnLoad").on("click", () => {
 		$("#btnLoad").attr("disabled", "disabled");

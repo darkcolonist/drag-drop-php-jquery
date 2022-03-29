@@ -10,4 +10,9 @@ $config = array(
    */
   "ignorepreview" => array(),
   "includepreview" => array("jpg","png","mp4"),
+
+  // time to expire upload (in seconds)
+  // WARNING, if you change this, files may be deleted if detected expired
+  // 0 for no expiration
+  "uploadexpires" => 432000,
 );

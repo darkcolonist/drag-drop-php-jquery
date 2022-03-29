@@ -36,6 +36,10 @@ hr{
   border-color: grey;
 }
 
+#readme{
+  display: none;
+}
+
 /*
  * The MIT License
  * Copyright (c) 2012 Matias Meno <m@tias.me>

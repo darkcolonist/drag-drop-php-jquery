@@ -6,5 +6,6 @@ helpers::jsonreturn(array(
   "code" => 200,
   "ignorepreview" => $config["ignorepreview"],
   "includepreview" => $config["includepreview"],
+  "uploadexpires" => $config["uploadexpires"],
 ));
 ?>

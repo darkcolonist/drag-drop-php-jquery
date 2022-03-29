@@ -29,10 +29,27 @@ $uploads = [];
 foreach ($files as $filekey => $fileval) {
   $filets = filectime($config["uploadDir"].$fileval);
   $filedsdate = helpers::getdate(filectime($config["uploadDir"].$fileval));
+  
+  $expires = $config["uploadexpires"] - (strtotime("now") - strtotime($filedsdate));
+  if($expires < 0) $expires = 0;
+
+  // $other = [];
+  if($config["uploadexpires"] !== 0 && $expires === 0){
+    // $other[] = "should delete {$fileval}";
+    // unlink();
+  }
+
   $uploads[] = array(
     "url" => $config["url"].$fileval,
-    "timestamp" => $filedsdate
+    "timestamp" => $filedsdate,
+    "expires" => $expires,
+    // "other" => $other
   );
+}
+
+function deleteFile($file){
+  // disable this for now
+  return false;
 }
 
 helpers::jsonreturn(array(
