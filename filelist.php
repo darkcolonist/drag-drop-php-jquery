@@ -33,23 +33,23 @@ foreach ($files as $filekey => $fileval) {
   $expires = $config["uploadexpires"] - (strtotime("now") - strtotime($filedsdate));
   if($expires < 0) $expires = 0;
 
-  // $other = [];
+  //$other = [];
   if($config["uploadexpires"] !== 0 && $expires === 0){
-    // $other[] = "should delete {$fileval}";
-    // unlink();
+    if($config["deleteexpired"])
+      deleteFile($config["uploadDir"].$fileval);
+  }else{
+    $uploads[] = array(
+      "url" => $config["url"].$fileval,
+      "timestamp" => $filedsdate,
+      "expires" => $expires,
+      //"other" => $other
+    );
   }
-
-  $uploads[] = array(
-    "url" => $config["url"].$fileval,
-    "timestamp" => $filedsdate,
-    "expires" => $expires,
-    // "other" => $other
-  );
 }
 
 function deleteFile($file){
-  // disable this for now
-  return false;
+  unlink($file);
+  return $file;
 }
 
 helpers::jsonreturn(array(

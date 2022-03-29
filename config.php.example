@@ -15,4 +15,7 @@ $config = array(
   // WARNING, if you change this, files may be deleted if detected expired
   // 0 for no expiration
   "uploadexpires" => 432000,
+
+  // when viewing filelist, expired files will be deleted
+  "deleteexpired" => false,
 );
